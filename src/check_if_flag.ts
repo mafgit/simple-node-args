@@ -21,7 +21,6 @@ export const check_if_flag = (
     } else {
       // the arg must be short
       const arg_sliced: string = arg.slice(1)
-      // TODO: Check if short prop exists
       flag_options = flag_models.find(
         ({ short }) => short && arg_sliced === short
       )

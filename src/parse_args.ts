@@ -10,11 +10,9 @@ export const initialize_args = (flag_models: flag_options[]) => {
   return initial_args
 }
 
-export const parse_args = (
-  flag_models: flag_options[],
-  args_passed: string[],
-  initial_args: { [key: string]: any }
-) => {
+export const parse_args = (flag_models: flag_options[]) => {
+  const args_passed: string[] = process.argv.slice(2)
+  const initial_args = initialize_args(flag_models)
   args_passed.forEach((arg, i) => {
     return check_if_flag(
       flag_models,
