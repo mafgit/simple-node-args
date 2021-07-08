@@ -1,5 +1,6 @@
 import { flag_options } from './flag_options'
 import { check_if_flag } from './check_if_flag'
+import { check_required } from './check_required'
 
 export const initialize_args = (flag_models: flag_options[]) => {
   const initial_args: { [key: string]: any } = {}
@@ -13,10 +14,10 @@ export const initialize_args = (flag_models: flag_options[]) => {
 export const parse_args = (flag_models: flag_options[]) => {
   const args_passed: string[] = process.argv.slice(2)
   const initial_args = initialize_args(flag_models)
-  args_passed.forEach((arg, i) => {
-    return check_if_flag(
+  for (let i = 0; i < args_passed.length; i++) {
+    check_if_flag(
       flag_models,
-      arg,
+      args_passed[i],
       (
         err: string | null,
         is_flag: boolean,
@@ -35,16 +36,19 @@ export const parse_args = (flag_models: flag_options[]) => {
                   })
                 }
                 initial_args[flag_options.long] = value
-              } else throw new Error(`Value not passed for ${arg}`)
+              } else throw new Error(`Value not passed for ${args_passed[i]}`)
             } else {
               initial_args[(flag_options as flag_options).long] = true
             }
           } else {
-            // console.log(`${arg} is a value`)
+            // console.log(`${args_passed[i]} is a value`)
           }
         }
       }
     )
+  }
+  return check_required(flag_models, initial_args, (err) => {
+    if (err) throw new Error(err)
+    return initial_args
   })
-  return initial_args
 }

@@ -28,4 +28,3 @@ const flag_models: flag_options[] = [
 ]
 
 const args = parse_args(flag_models)
-console.log(args)
