@@ -1,7 +1,8 @@
 # Todos
 - Let the user handle error logging himself
-- Add array types
 - Make enum arg values
+- Write all tests in tests portion.
+- Write docs
 
 # Tests
 - Check whether value_must_not_be_empty is working

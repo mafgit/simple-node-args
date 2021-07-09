@@ -1,15 +1,8 @@
 import { flag_options } from './flag_options'
 import { check_if_flag } from './check_if_flag'
 import { check_required } from './check_required'
-
-export const initialize_args = (flag_models: flag_options[]) => {
-  const initial_args: { [key: string]: any } = {}
-  flag_models.forEach(({ default_value, long }) => {
-    if (typeof default_value !== 'undefined') initial_args[long] = default_value
-    else initial_args[long] = undefined
-  })
-  return initial_args
-}
+import { initialize_args } from './initialize_args'
+import { check_type } from './check_type'
 
 export const parse_args = (flag_models: flag_options[]) => {
   const args_passed: string[] = process.argv.slice(2)
@@ -30,28 +23,58 @@ export const parse_args = (flag_models: flag_options[]) => {
               if (typeof args_passed[i + 1] !== 'undefined') {
                 // for loop for args values array
                 let value: any = args_passed[i + 1]
+                let is_arr: boolean = false
+                let arr_value: any[] = []
                 const { on_value, value_must_not_be_empty, type } = flag_options
-
-                // checking types, default is string, no need to check
-                if (
-                  (type === 'integer' || type === 'float') &&
-                  isNaN(parseFloat(value))
-                )
-                  throw new Error(`Type Error: Expected ${type}, received NaN`)
-                if (type === 'integer') value = parseInt(value)
-                else if (type === 'float') value = parseFloat(value)
 
                 if (value_must_not_be_empty && value === '')
                   throw new Error(
                     `Empty Value Error: Value not provided for ${args_passed[i]}`
                   )
+
+                // checking types
+                if (type) {
+                  if (!type.startsWith('arr_of_'))
+                    check_type(
+                      type as 'string' | 'integer' | 'float',
+                      value,
+                      args_passed[i],
+                      (err, parsed_value) => {
+                        if (err) throw new Error(err)
+                        value = parsed_value
+                      }
+                    )
+                  else {
+                    // values are of an array
+                    for (let j = i + 1; j < args_passed.length; j++) {
+                      if (args_passed[j].startsWith('-')) break
+                      else {
+                        is_arr = true
+                        let val_type = type.replace('arr_of_', '')
+                        check_type(
+                          val_type as 'string' | 'integer' | 'float',
+                          args_passed[j],
+                          args_passed[i],
+                          (err, parsed_value) => {
+                            if (err) throw err
+                            arr_value.push(parsed_value)
+                          }
+                        )
+                      }
+                    }
+                  }
+                }
+                // --x--
+
                 if (on_value) {
                   on_value(value, (err: string | null, new_value: any) => {
                     if (err) throw new Error(err)
                     if (typeof new_value !== 'undefined') value = new_value
                   })
                 }
-                initial_args[flag_options.long] = value
+
+                if (is_arr) initial_args[flag_options.long] = arr_value
+                else initial_args[flag_options.long] = value
               } else
                 throw new Error(
                   `No Value Error: Value not passed for ${args_passed[i]}`
@@ -59,9 +82,10 @@ export const parse_args = (flag_models: flag_options[]) => {
             } else {
               initial_args[(flag_options as flag_options).long] = true
             }
-          } else {
-            // console.log(`${args_passed[i]} is a value`)
           }
+          // else {
+          //   console.log(`${args_passed[i]} is a value`)
+          // }
         }
       }
     )

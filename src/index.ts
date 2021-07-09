@@ -2,24 +2,35 @@ import { flag_options } from './flag_options'
 import { parse_args } from './parse_args'
 
 const flag_models: flag_options[] = [
-  // doesn't have short name
-  { long: 'age', will_have_value: true, type: 'integer' },
-  // has on_value and required and will_have_value
   {
-    long: 'name',
-    short: 'n',
+    long: 'firstname',
     will_have_value: true,
-    required: true,
-    on_value: (val: string, cb) => {
-      if (val.length < 5) cb('Name must be longer than 4 characters')
-      else cb(null, val.toUpperCase())
-    },
+    value_must_not_be_empty: true,
+    type: 'string',
   },
-  // has default
+  {
+    long: 'lastname',
+    will_have_value: true,
+    value_must_not_be_empty: true,
+    // without type string, coz it is the default
+  },
   {
     long: 'gender',
-    short: 'g',
-    default_value: 'male',
+    will_have_value: true,
+    value_must_not_be_empty: true,
+    // TODO: enum
+  },
+  {
+    long: 'hobbies',
+    will_have_value: true,
+    value_must_not_be_empty: true,
+    type: 'arr_of_string',
+  },
+  {
+    long: 'past-salaries',
+    will_have_value: true,
+    value_must_not_be_empty: true,
+    type: 'arr_of_float',
   },
 ]
 
