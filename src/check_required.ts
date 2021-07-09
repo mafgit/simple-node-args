@@ -11,7 +11,7 @@ export const check_required = (
   required_flags.forEach((required_flag) => {
     if (typeof parsed_args[required_flag] === 'undefined') {
       return cb(
-        `Required Error: You did not pass a value for the required flag '${required_flag}'.`
+        `Validation Error: You did not pass a value for the required flag '${required_flag}'.`
       )
     }
   })

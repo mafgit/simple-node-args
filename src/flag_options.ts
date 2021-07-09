@@ -2,9 +2,16 @@ export type flag_options = {
   short?: string
   long: string
   will_have_value?: boolean
-  required?: boolean
   default_value?: any
-  value_must_not_be_empty?: boolean
+  // Validations:
+  required?: boolean
+  must_not_be_empty?: boolean
+  enum?: Array<string>
+  min?: number
+  max?: number
+  minLength?: number // done
+  maxLength?: number // done
+  //
   type?:
     | 'integer'
     | 'float'

@@ -16,7 +16,11 @@ export const check_if_flag = (
       // checking if the flag exists
       flag_options = flag_models.find(({ long }) => arg_sliced === long)
       if (!flag_options)
-        return cb(`${arg} is an invalid flag.`, is_flag, flag_options)
+        return cb(
+          `Flag Error: ${arg} is an invalid flag.`,
+          is_flag,
+          flag_options
+        )
       is_flag = true
     } else {
       // the arg must be short
@@ -26,7 +30,7 @@ export const check_if_flag = (
       )
       if (!flag_options)
         return cb(
-          `Invalid Flag Error: ${arg} is an invalid flag.`,
+          `Flag Error: ${arg} is an invalid flag.`,
           is_flag,
           flag_options
         )

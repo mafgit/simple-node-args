@@ -25,9 +25,10 @@ export const parse_args = (flag_models: flag_options[]) => {
                 let value: any = args_passed[i + 1]
                 let is_arr: boolean = false
                 let arr_value: any[] = []
-                const { on_value, value_must_not_be_empty, type } = flag_options
+                const { on_value, must_not_be_empty } = flag_options
+                let { type } = flag_options
 
-                if (value_must_not_be_empty && value === '')
+                if (must_not_be_empty && value === '')
                   throw new Error(
                     `Empty Value Error: Value not provided for ${args_passed[i]}`
                   )
@@ -62,6 +63,24 @@ export const parse_args = (flag_models: flag_options[]) => {
                         )
                       }
                     }
+                  }
+                } else type = 'string'
+                // --x--
+
+                // Checking minLength, maxLength
+                if (type === 'string') {
+                  const { minLength, maxLength } = flag_options
+                  if (typeof minLength !== 'undefined') {
+                    if (value.length < minLength)
+                      throw new Error(
+                        `Validation Error: Length of the value of ${args_passed[i]}, ${value.length}, is smaller than the minLength, ${minLength}.`
+                      )
+                  }
+                  if (typeof maxLength !== 'undefined') {
+                    if (value.length > maxLength)
+                      throw new Error(
+                        `Validation Error: Length of the value of ${args_passed[i]}, ${value.length}, is greater than the maxLength, ${maxLength}.`
+                      )
                   }
                 }
                 // --x--
