@@ -19,6 +19,14 @@ const flag_models: flag_options[] = [
     // without type string, coz it is the default
   },
   {
+    long: 'age',
+    will_have_value: true,
+    must_not_be_empty: true,
+    type: 'integer',
+    min: 18,
+    max: 30,
+  },
+  {
     long: 'gender',
     will_have_value: true,
     must_not_be_empty: true,

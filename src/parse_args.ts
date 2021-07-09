@@ -82,7 +82,26 @@ export const parse_args = (flag_models: flag_options[]) => {
                         `Validation Error: Length of the value of ${args_passed[i]}, ${value.length}, is greater than the maxLength, ${maxLength}.`
                       )
                   }
+                } else if (type === 'float' || type === 'integer') {
+                  // Checking min, max
+                  const { min, max } = flag_options
+                  if (typeof max !== 'undefined') {
+                    if (value > max)
+                      throw new Error(
+                        `Validation Error: Expected the value of ${args_passed[i]} to not exceed ${max}.`
+                      )
+                  }
+                  if (typeof min !== 'undefined') {
+                    if (value < min)
+                      throw new Error(
+                        `Validation Error: Expected the value of ${args_passed[i]} to be at least ${min}.`
+                      )
+                  }
                 }
+                // --x--
+
+                // Checking min, max
+
                 // --x--
 
                 if (on_value) {
@@ -96,7 +115,7 @@ export const parse_args = (flag_models: flag_options[]) => {
                 else initial_args[flag_options.long] = value
               } else
                 throw new Error(
-                  `No Value Error: Value not passed for ${args_passed[i]}`
+                  `Validation Error: Value not passed for ${args_passed[i]}`
                 )
             } else {
               initial_args[(flag_options as flag_options).long] = true
