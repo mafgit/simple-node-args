@@ -36,7 +36,10 @@ export const parse_args = (flag_models: flag_options[]) => {
                   })
                 }
                 initial_args[flag_options.long] = value
-              } else throw new Error(`Value not passed for ${args_passed[i]}`)
+              } else
+                throw new Error(
+                  `No Value Error: Value not passed for ${args_passed[i]}`
+                )
             } else {
               initial_args[(flag_options as flag_options).long] = true
             }

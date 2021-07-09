@@ -25,7 +25,11 @@ export const check_if_flag = (
         ({ short }) => short && arg_sliced === short
       )
       if (!flag_options)
-        return cb(`${arg} is an invalid flag.`, is_flag, flag_options)
+        return cb(
+          `Invalid Flag Error: ${arg} is an invalid flag.`,
+          is_flag,
+          flag_options
+        )
       else is_flag = true
     }
   }
