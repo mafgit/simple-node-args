@@ -3,6 +3,7 @@
 - Make enum arg values
 - Write all tests in tests portion.
 - Write docs
+- Write description in pkg.json
 
 # Tests
 - Check whether must_not_be_empty is working

@@ -1,7 +1,7 @@
 {
   "name": "simple-node-args",
   "version": "1.0.0",
-  "description": "A simple cli tool to parse arguments passed into your node.js app.",
+  "description": "",
   "main": "./dist/index.js",
   "scripts": {
     "build": "npx tsc -w",

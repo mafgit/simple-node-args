@@ -67,8 +67,8 @@ export const parse_args = (flag_models: flag_options[]) => {
                 } else type = 'string'
                 // --x--
 
-                // Checking minLength, maxLength
                 if (type === 'string') {
+                  // Checking minLength, maxLength
                   const { minLength, maxLength } = flag_options
                   if (typeof minLength !== 'undefined') {
                     if (value.length < minLength)
@@ -80,6 +80,13 @@ export const parse_args = (flag_models: flag_options[]) => {
                     if (value.length > maxLength)
                       throw new Error(
                         `Validation Error: Length of the value of ${args_passed[i]}, ${value.length}, is greater than the maxLength, ${maxLength}.`
+                      )
+                  }
+                  const enum_arr: string[] | undefined = flag_options.enum
+                  if (typeof enum_arr !== 'undefined') {
+                    if (!enum_arr.includes(value))
+                      throw new Error(
+                        `Validation Error: The value for ${args_passed[i]} does not pass the enum test.`
                       )
                   }
                 } else if (type === 'float' || type === 'integer') {

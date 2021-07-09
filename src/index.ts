@@ -30,7 +30,7 @@ const flag_models: flag_options[] = [
     long: 'gender',
     will_have_value: true,
     must_not_be_empty: true,
-    // TODO: enum
+    enum: ['male', 'female'],
   },
   {
     long: 'hobbies',
