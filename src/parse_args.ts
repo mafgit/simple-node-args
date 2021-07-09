@@ -28,11 +28,27 @@ export const parse_args = (flag_models: flag_options[]) => {
           if (is_flag) {
             if (flag_options?.will_have_value) {
               if (typeof args_passed[i + 1] !== 'undefined') {
-                const value = args_passed[i + 1]
-                const { on_value } = flag_options
+                // for loop for args values array
+                let value: any = args_passed[i + 1]
+                const { on_value, value_must_not_be_empty, type } = flag_options
+
+                // checking types, default is string, no need to check
+                if (
+                  (type === 'integer' || type === 'float') &&
+                  isNaN(parseFloat(value))
+                )
+                  throw new Error(`Type Error: Expected ${type}, received NaN`)
+                if (type === 'integer') value = parseInt(value)
+                else if (type === 'float') value = parseFloat(value)
+
+                if (value_must_not_be_empty && value === '')
+                  throw new Error(
+                    `Empty Value Error: Value not provided for ${args_passed[i]}`
+                  )
                 if (on_value) {
-                  on_value(value, (err: string | null) => {
+                  on_value(value, (err: string | null, new_value: any) => {
                     if (err) throw new Error(err)
+                    if (typeof new_value !== 'undefined') value = new_value
                   })
                 }
                 initial_args[flag_options.long] = value

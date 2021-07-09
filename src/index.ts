@@ -2,28 +2,24 @@ import { flag_options } from './flag_options'
 import { parse_args } from './parse_args'
 
 const flag_models: flag_options[] = [
+  // doesn't have short name
+  { long: 'age', will_have_value: true, type: 'integer' },
+  // has on_value and required and will_have_value
   {
-    long: 'git',
-    will_have_value: false,
-  },
-  { short: 'h', long: 'help', will_have_value: false },
-  { short: 'v', long: 'version', will_have_value: false },
-  {
-    short: 'p',
-    long: 'path',
+    long: 'name',
+    short: 'n',
     will_have_value: true,
-    default_value: './backend/',
+    required: true,
+    on_value: (val: string, cb) => {
+      if (val.length < 5) cb('Name must be longer than 4 characters')
+      else cb(null, val.toUpperCase())
+    },
   },
+  // has default
   {
-    short: 'd',
-    long: 'dependencies',
-    will_have_value: true,
-  },
-  {
-    short: 'dd',
-    long: 'devDependencies',
-    will_have_value: true,
-    default_value: 'nodemon',
+    long: 'gender',
+    short: 'g',
+    default_value: 'male',
   },
 ]
 
