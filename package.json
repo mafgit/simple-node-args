@@ -1,13 +1,14 @@
 {
   "name": "simple-node-args",
   "version": "1.0.0",
-  "description": "",
+  "description": "An npm package to help you parse arguments passed to your Node.js app.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "npx tsc -w",
     "prepublish": "npm run build",
-    "start": "node ./"
+    "start": "node ./",
+    "docs": "docsify serve docs"
   },
   "keywords": [
     "cli",
