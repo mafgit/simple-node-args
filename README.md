@@ -17,12 +17,6 @@
 
 - ✔️ Type Check
 
-  - Integer
-  - Float
-  - String
-  - Boolean
-  - Arrays
-
 - 🔢 Min/max checks
 
 - 🧮 Enums, required check, etc

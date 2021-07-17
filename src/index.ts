@@ -83,7 +83,7 @@ class Program {
                   if (type) {
                     if (!type.startsWith('arr_of_'))
                       check_type(
-                        type as 'string' | 'integer' | 'float',
+                        type as 'string' | 'integer' | 'float' | 'boolean',
                         value,
                         args_passed[i],
                         (err, parsed_value) => {
@@ -99,7 +99,11 @@ class Program {
                           is_arr = true
                           let val_type = type.replace('arr_of_', '')
                           check_type(
-                            val_type as 'string' | 'integer' | 'float',
+                            val_type as
+                              | 'string'
+                              | 'integer'
+                              | 'float'
+                              | 'boolean',
                             args_passed[j],
                             args_passed[i],
                             (err, parsed_value) => {

@@ -24,6 +24,7 @@ export type flag_options = {
     | 'integer'
     | 'float'
     | 'string'
+    | 'boolean'
     | 'arr_of_integer'
     | 'arr_of_float'
     | 'arr_of_string'
