@@ -4,7 +4,7 @@
 
 # Simple Node Args
 
-> An npm package to help you parse arguments passed to your Node.js app.
+> An npm package to help you parse arguments passed into your Node.js app.
 
 [![NPM](https://img.shields.io/npm/dt/simple-node-args?style=for-the-badge)](https://www.npmjs.com/package/simple-node-args)
 [![NPM](https://img.shields.io/npm/v/simple-node-args?style=for-the-badge)](https://www.npmjs.com/package/simple-node-args)

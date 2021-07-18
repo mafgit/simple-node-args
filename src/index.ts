@@ -51,8 +51,8 @@ class Program {
         args_passed[i],
         (
           err: string | null,
-          is_flag: boolean,
-          flag_options: undefined | flag_options
+          is_flag: boolean | undefined,
+          flag_options: flag_options | undefined
         ) => {
           if (err) throw new Error(err)
           else {
