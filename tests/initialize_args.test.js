@@ -1,5 +1,4 @@
 const { initialize_args } = require('../dist/initialize_args')
-// const { initialize_args } = require('../src/initialize_args')
 
 const flag_models = [
   { long: 'male', default_value: false, will_have_value: true },
@@ -8,11 +7,13 @@ const flag_models = [
   { long: 'name', will_have_value: true },
 ]
 
-test('Initialize Args', () => {
-  const value = initialize_args(flag_models)
-  expect(value).toEqual({
-    male: false,
-    age: 18,
-    country: 'Pakistan',
+describe('Initialize Args', () => {
+  test('should pass, comparing two objects', () => {
+    const value = initialize_args(flag_models)
+    expect(value).toEqual({
+      male: false,
+      age: 18,
+      country: 'Pakistan',
+    })
   })
 })
