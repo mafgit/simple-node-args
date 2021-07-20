@@ -30,6 +30,7 @@ class Program {
   help_message: string
   links?: link[]
   contacts?: contact[]
+  on_error: (err: string) => any
 
   constructor(details: ProgramDetails) {
     const { name, description, version, links, contacts } = details
@@ -40,6 +41,9 @@ class Program {
     this.contacts = contacts || []
     this.help_message = ''
     this.args = {}
+    this.on_error = (err: string) => {
+      throw new Error(err)
+    }
   }
 
   parse_args(flag_models: flag_options[], args_passed: string[]) {
@@ -54,15 +58,12 @@ class Program {
           is_flag: boolean | undefined,
           flag_options: flag_options | undefined
         ) => {
-          if (err) throw new Error(err)
+          if (err) this.on_error(err)
           else {
             if (is_flag) {
               if (flag_options?.help_flag) {
-                if (flag_options?.custom_help_msg)
-                  this.help_message = flag_options.custom_help_msg
-                else this.gen_help_message(flag_models)
+                if (!this.help_message) this.gen_help_message(flag_models)
                 console.log(this.help_message)
-                // process.exit()
               }
 
               if (flag_options?.will_have_value) {
@@ -75,7 +76,7 @@ class Program {
                   let { type } = flag_options
 
                   if (must_not_be_empty && value === '')
-                    throw new Error(
+                    this.on_error(
                       `Empty Value Error: Value not provided for ${args_passed[i]}`
                     )
 
@@ -87,7 +88,7 @@ class Program {
                         value,
                         args_passed[i],
                         (err, parsed_value) => {
-                          if (err) throw new Error(err)
+                          if (err) this.on_error(err)
                           value = parsed_value
                         }
                       )
@@ -122,20 +123,20 @@ class Program {
                     const { minLength, maxLength } = flag_options
                     if (typeof minLength !== 'undefined') {
                       if (value.length < minLength)
-                        throw new Error(
+                        this.on_error(
                           `Validation Error: Length of the value of ${args_passed[i]}, ${value.length}, is smaller than the minLength, ${minLength}.`
                         )
                     }
                     if (typeof maxLength !== 'undefined') {
                       if (value.length > maxLength)
-                        throw new Error(
+                        this.on_error(
                           `Validation Error: Length of the value of ${args_passed[i]}, ${value.length}, is greater than the maxLength, ${maxLength}.`
                         )
                     }
                     const enum_arr: string[] | undefined = flag_options.enum
                     if (typeof enum_arr !== 'undefined') {
                       if (!enum_arr.includes(value))
-                        throw new Error(
+                        this.on_error(
                           `Validation Error: The value for ${args_passed[i]} does not pass the enum test.`
                         )
                     }
@@ -144,13 +145,13 @@ class Program {
                     const { min, max } = flag_options
                     if (typeof max !== 'undefined') {
                       if (value > max)
-                        throw new Error(
+                        this.on_error(
                           `Validation Error: Expected the value of ${args_passed[i]} to not exceed ${max}.`
                         )
                     }
                     if (typeof min !== 'undefined') {
                       if (value < min)
-                        throw new Error(
+                        this.on_error(
                           `Validation Error: Expected the value of ${args_passed[i]} to be at least ${min}.`
                         )
                     }
@@ -159,7 +160,7 @@ class Program {
 
                   if (on_value) {
                     on_value(value, (err: string | null, new_value: any) => {
-                      if (err) throw new Error(err)
+                      if (err) this.on_error(err)
                       if (typeof new_value !== 'undefined') value = new_value
                     })
                   }
@@ -167,7 +168,7 @@ class Program {
                   if (is_arr) initial_args[flag_options.long] = arr_value
                   else initial_args[flag_options.long] = value
                 } else
-                  throw new Error(
+                  this.on_error(
                     `Validation Error: Value not passed for ${args_passed[i]}`
                   )
               } else {
@@ -184,7 +185,7 @@ class Program {
       )
     }
     check_required(flag_models, initial_args, (err) => {
-      if (err) throw new Error(err)
+      if (err) this.on_error(err)
       this.args = initial_args
     })
   }
@@ -275,10 +276,6 @@ class Program {
       })
     }
 
-    this.help_message = msg
-  }
-
-  custom_help(msg: string) {
     this.help_message = msg
   }
 }

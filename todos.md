@@ -1,5 +1,4 @@
 # Todos
-- [ ] Let the user handle error logging himself
 - [ ] Write tests
 - [ ] Write docs and change readme.md
 

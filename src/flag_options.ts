@@ -6,7 +6,6 @@ export type flag_options = {
   default_value?: any
   value_title?: string
   help_flag?: boolean
-  custom_help_msg?: string
   on_flag?: () => any
   on_value?: (
     value: string,
