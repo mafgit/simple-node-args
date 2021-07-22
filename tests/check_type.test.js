@@ -10,7 +10,7 @@ describe('check_type: string', () => {
 })
 
 describe('check_type: integer', () => {
-  test('should err, passed a string with alphabets into type integer', () => {
+  test('should pass, passed a string with alphabets into type integer', () => {
     check_type('integer', 'hey there 03', 'f', (err, value) => {
       expect(value).toBeUndefined()
       expect(err).toBeTruthy()
@@ -26,7 +26,7 @@ describe('check_type: integer', () => {
 })
 
 describe('check_type: float', () => {
-  test('should err, passed a string with alphabets into type float', () => {
+  test('should pass, passed a string with alphabets into type float', () => {
     check_type('float', 'hey there 03', 'f', (err, value) => {
       expect(value).toBeUndefined()
       expect(err).toBeTruthy()
@@ -56,7 +56,7 @@ describe('check_type: boolean', () => {
     })
   })
 
-  test('should err, passed a string that is neither equal to "true" nor "false"', () => {
+  test('should pass, passed a string that is neither equal to "true" nor "false"', () => {
     check_type('boolean', 'hey there true', 'f', (err, value) => {
       expect(value).toBeUndefined()
       expect(err).toBeTruthy()

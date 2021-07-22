@@ -13,12 +13,11 @@ export type flag_options = {
   ) => any
   // Validations:
   required?: boolean
-  must_not_be_empty?: boolean
-  enum?: Array<string>
+  enum?: string[]
   min?: number
   max?: number
-  minLength?: number
-  maxLength?: number
+  min_length?: number
+  max_length?: number
   type?:
     | 'integer'
     | 'float'

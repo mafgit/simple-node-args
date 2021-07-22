@@ -7,7 +7,7 @@ const flag_models = [
 ]
 
 describe('check_required', () => {
-  test('should err, did not pass "name" but "age" is set to undefined, both are required flags', () => {
+  test('should pass, did not pass "name" but "age" is set to undefined, both are required flags', () => {
     const parsed_args = {
       country: 'Pakistan',
       age: undefined,
@@ -17,7 +17,7 @@ describe('check_required', () => {
     })
   })
 
-  test('should err, passed both "name" and "age", but as undefined, they both are required flags', () => {
+  test('should pass, passed both "name" and "age", but as undefined, they both are required flags', () => {
     const parsed_args = {
       country: 'Pakistan',
       age: undefined,

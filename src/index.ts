@@ -72,13 +72,8 @@ class Program {
                   let value: any = args_passed[i + 1]
                   let is_arr: boolean = false
                   let arr_value: any[] = []
-                  const { on_value, must_not_be_empty } = flag_options
+                  const { on_value } = flag_options
                   let { type } = flag_options
-
-                  if (must_not_be_empty && value === '')
-                    this.on_error(
-                      `Empty Value Error: Value not provided for ${args_passed[i]}`
-                    )
 
                   // checking types
                   if (type) {
@@ -119,18 +114,18 @@ class Program {
                   // --x--
 
                   if (type === 'string') {
-                    // Checking minLength, maxLength
-                    const { minLength, maxLength } = flag_options
-                    if (typeof minLength !== 'undefined') {
-                      if (value.length < minLength)
+                    // Checking min_length, max_length
+                    const { min_length, max_length } = flag_options
+                    if (typeof min_length !== 'undefined') {
+                      if (value.length < min_length)
                         this.on_error(
-                          `Validation Error: Length of the value of ${args_passed[i]}, ${value.length}, is smaller than the minLength, ${minLength}.`
+                          `Validation Error: Length of the value of ${args_passed[i]}, ${value.length}, is smaller than the min_length, ${min_length}.`
                         )
                     }
-                    if (typeof maxLength !== 'undefined') {
-                      if (value.length > maxLength)
+                    if (typeof max_length !== 'undefined') {
+                      if (value.length > max_length)
                         this.on_error(
-                          `Validation Error: Length of the value of ${args_passed[i]}, ${value.length}, is greater than the maxLength, ${maxLength}.`
+                          `Validation Error: Length of the value of ${args_passed[i]}, ${value.length}, is greater than the max_length, ${max_length}.`
                         )
                     }
                     const enum_arr: string[] | undefined = flag_options.enum

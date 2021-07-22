@@ -33,7 +33,7 @@ describe('check_if_flag', () => {
     })
   })
 
-  test('should err, passed an invalid long flag, is_flag must be undefined, flag_options must be undefined', () => {
+  test('should pass, passed an invalid long flag, is_flag must be undefined, flag_options must be undefined', () => {
     const arg = '--flag'
     check_if_flag(flag_models, arg, (err, is_flag, flag_options) => {
       expect(err).toBeTruthy()
@@ -42,7 +42,7 @@ describe('check_if_flag', () => {
     })
   })
 
-  test('should err, passed an invalid short flag, is_flag must be undefined, flag_options must be undefined', () => {
+  test('should pass, passed an invalid short flag, is_flag must be undefined, flag_options must be undefined', () => {
     const arg = '-f'
     check_if_flag(flag_models, arg, (err, is_flag, flag_options) => {
       expect(err).toBeTruthy()
