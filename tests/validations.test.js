@@ -1,8 +1,5 @@
 const Program = require('../dist/index')
 const program = new Program({ name: 'test' })
-// todo:
-// max_length?: number
-// type?: 'integer' | 'float' | 'string' | 'boolean' | 'arr_of_integer' | 'arr_of_float' | 'arr_of_string'
 
 describe('Enum tests', () => {
   test('should pass, passing invalid values for enum', () => {
@@ -109,8 +106,31 @@ describe('min_length for strings', () => {
 })
 
 describe('max_length for strings', () => {
-  test.todo('should fail, passing string bigger than max_length')
-  test.todo('should pass, passing strings smaller than and equal to max_length')
+  const models = [{ long: 'text', will_have_value: true, max_length: 5 }]
+  test('should fail, passing string bigger than max_length', () => {
+    const process_args = ['', '', '--text', 'hello!']
+    expect(() => {
+      program.parse_args(models, process_args)
+    }).toThrowError({
+      message:
+        'Validation Error: Length of the value of --text, 6, is greater than the max_length, 5.',
+    })
+  })
+  test('should pass, passing strings smaller than and equal to max_length', () => {
+    const process_args = ['', '', '--text', 'hello']
+    program.parse_args(models, process_args)
+    expect(program.args.text).toBe('hello')
+
+    process_args[3] = 'hey'
+    program.parse_args(models, process_args)
+    expect(program.args.text).toBe('hey')
+  })
 })
 
+// todo: type?: 'integer' | 'float' | 'string' | 'boolean' | 'arr_of_integer' | 'arr_of_float' | 'arr_of_string'
+// todo: required?: boolean
+// todo: default_value?: any
+
 describe('type parsing', () => {})
+describe('required test', () => {})
+describe('default value test', () => {})

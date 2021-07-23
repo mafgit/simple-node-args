@@ -1,4 +1,5 @@
 export type flag_options = {
+  // Details:
   long: string
   short?: string
   description?: string
@@ -6,6 +7,7 @@ export type flag_options = {
   default_value?: any
   value_title?: string
   help_flag?: boolean
+  // Events:
   on_flag?: () => any
   on_value?: (
     value: string,
