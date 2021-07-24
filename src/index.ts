@@ -1,26 +1,11 @@
-import { flag_options } from './flag_options'
+import { contact, flag_options, link, program_details } from './types'
 import { check_if_flag } from './check_if_flag'
 import { check_required } from './check_required'
 import { initialize_args } from './initialize_args'
 import { check_type } from './check_type'
-
-type contact = {
-  name: string
-  value: string
-}
-
-type link = {
-  name: string
-  url: string
-}
-
-type ProgramDetails = {
-  name: string
-  description?: string
-  version?: string
-  links?: link[]
-  contacts?: contact[]
-}
+import { validate_string } from './validate_string'
+import { validate_number } from './validate_number'
+import { gen_help_message } from './gen_help_message'
 
 class Program {
   name: string
@@ -32,7 +17,7 @@ class Program {
   contacts?: contact[]
   on_error: (err: string) => any
 
-  constructor(details: ProgramDetails) {
+  constructor(details: program_details) {
     const { name, description, version, links, contacts } = details
     this.name = name
     this.description = description
@@ -46,7 +31,7 @@ class Program {
     }
   }
 
-  parse_args(flag_models: flag_options[], args_passed: string[]) {
+  parse(flag_models: flag_options[], args_passed: string[]) {
     args_passed = args_passed.slice(2)
     const initial_args = initialize_args(flag_models)
     for (let i = 0; i < args_passed.length; i++) {
@@ -62,7 +47,17 @@ class Program {
           else {
             if (is_flag) {
               if (flag_options?.help_flag) {
-                if (!this.help_message) this.gen_help_message(flag_models)
+                if (!this.help_message)
+                  this.help_message = gen_help_message(
+                    {
+                      name: this.name,
+                      description: this.description,
+                      version: this.version,
+                      links: this.links,
+                      contacts: this.contacts,
+                    },
+                    flag_models
+                  )
                 console.log(this.help_message)
               }
 
@@ -113,58 +108,26 @@ class Program {
                   } else type = 'string'
                   // --x--
 
+                  // VALIDATIONS
                   if (type === 'string') {
-                    // Checking min_length, max_length
-                    const { min_length, max_length, regex } = flag_options
-                    if (typeof min_length !== 'undefined') {
-                      if (value.length < min_length)
-                        this.on_error(
-                          `Validation Error: Length of the value of ${args_passed[i]}, ${value.length}, is smaller than the min_length, ${min_length}.`
-                        )
-                    }
-                    if (typeof max_length !== 'undefined') {
-                      if (value.length > max_length)
-                        this.on_error(
-                          `Validation Error: Length of the value of ${args_passed[i]}, ${value.length}, is greater than the max_length, ${max_length}.`
-                        )
-                    }
-                    // x---x Checking min_length, max_length x---x
-
-                    // checking enum
-                    const enum_arr: string[] | undefined = flag_options.enum
-                    if (typeof enum_arr !== 'undefined') {
-                      if (!enum_arr.includes(value))
-                        this.on_error(
-                          `Validation Error: The value for ${args_passed[i]} does not pass the enum test.`
-                        )
-                    }
-                    // x---x checking enum x---x
-
-                    // checking regex
-                    if (typeof regex !== 'undefined') {
-                      if (!regex.test(value))
-                        this.on_error(
-                          `Validation Error: The value for ${args_passed[i]} does not pass the regex test.`
-                        )
-                    }
-                    // x---x checking regex x---x
+                    validate_string(
+                      args_passed[i],
+                      value,
+                      flag_options,
+                      (err) => {
+                        if (err) this.on_error(err)
+                      }
+                    )
                   } else if (type === 'float' || type === 'integer') {
-                    // Checking min, max
-                    const { min, max } = flag_options
-                    if (typeof max !== 'undefined') {
-                      if (value > max)
-                        this.on_error(
-                          `Validation Error: Expected the value of ${args_passed[i]} to not exceed ${max}.`
-                        )
-                    }
-                    if (typeof min !== 'undefined') {
-                      if (value < min)
-                        this.on_error(
-                          `Validation Error: Expected the value of ${args_passed[i]} to be at least ${min}.`
-                        )
-                    }
+                    validate_number(
+                      args_passed[i],
+                      value,
+                      flag_options,
+                      (err) => {
+                        if (err) this.on_error(err)
+                      }
+                    )
                   }
-                  // x---x Checking min, max x---x
 
                   if (on_value) {
                     on_value(value, (err: string | null, new_value: any) => {
@@ -196,95 +159,6 @@ class Program {
       if (err) this.on_error(err)
       this.args = initial_args
     })
-  }
-
-  gen_help_message(flag_models: flag_options[]) {
-    const {
-      name: program_name,
-      version: program_version,
-      description: program_description,
-      links = [],
-      contacts = [],
-    } = this
-
-    let msg = `\n${program_name}${
-      program_version ? '@' + program_version : ''
-    }${
-      program_description ? " - '" + program_description + "'" : ''
-    }\nUsage: ${program_name} [options]\n`
-
-    // options
-    if (flag_models.length > 0) {
-      msg += `\nOptions:\n\n`
-      // checking spaces in flag_models
-      let max_spaces = 0
-      flag_models?.forEach(
-        ({ short, long, type, value_title, will_have_value }) => {
-          if (will_have_value && !type) type = 'string'
-          let spaces = `${short ? '-' + short + ', ' : ''}--${long}${
-            value_title
-              ? ' <' + value_title + '>'
-              : type
-              ? ' <' + type + '>'
-              : ''
-          }  `.length
-          if (spaces > max_spaces) max_spaces = spaces
-        }
-      )
-      // ---x--- checking spaces
-
-      flag_models?.forEach(
-        ({ short, long, type, description, value_title, will_have_value }) => {
-          if (will_have_value && !type) type = 'string'
-          let line = `${short ? '-' + short + ', ' : ''}--${long}${
-            value_title
-              ? ' <' + value_title + '>'
-              : type
-              ? ' <' + type + '>'
-              : ''
-          }`
-          let spaces = max_spaces - line.length
-          line += `${description ? ' '.repeat(spaces) + description : ''}\n`
-          msg += line
-        }
-      )
-    }
-
-    // checking spaces in links
-    if (links?.length > 0) {
-      msg += `\nLinks:\n\n`
-      let max_spaces = 0
-      links?.forEach(({ name }) => {
-        let spaces = `${name}  `.length
-        if (spaces > max_spaces) max_spaces = spaces
-      })
-      // ---x--- checking spaces
-
-      links?.forEach(({ name, url }) => {
-        let spaces = max_spaces - name.length
-        let line = name + ' '.repeat(spaces) + url + '\n'
-        msg += line
-      })
-    }
-
-    // checking spaces in contacts
-    if (contacts?.length > 0) {
-      msg += `\nContacts:\n\n`
-      let max_spaces = 0
-      contacts?.forEach(({ name }) => {
-        let spaces = `${name}  `.length
-        if (spaces > max_spaces) max_spaces = spaces
-      })
-      // ---x--- checking spaces
-
-      contacts?.forEach(({ name, value }) => {
-        let spaces = max_spaces - name.length
-        let line = name + ' '.repeat(spaces) + value + '\n'
-        msg += line
-      })
-    }
-
-    this.help_message = msg
   }
 }
 

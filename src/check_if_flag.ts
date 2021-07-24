@@ -1,4 +1,4 @@
-import { flag_options } from './flag_options'
+import { flag_options } from './types'
 
 export const check_if_flag = (
   flag_models: flag_options[],

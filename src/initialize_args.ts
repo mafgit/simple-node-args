@@ -1,4 +1,4 @@
-import { flag_options } from './flag_options'
+import { flag_options } from './types'
 
 export const initialize_args = (flag_models: flag_options[]) => {
   const initial_args: { [key: string]: any } = {}

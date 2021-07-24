@@ -1,7 +1,6 @@
 # Todos
 - [ ] Change error messages
-- [ ] Flag options: regex
-- [ ] Write tests
+- [ ] Write remaining tests
 - [ ] Write docs and change readme.md
 
 # Tests

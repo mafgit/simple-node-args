@@ -30,3 +30,21 @@ export type flag_options = {
     | 'arr_of_float'
     | 'arr_of_string'
 }
+
+export type contact = {
+  name: string
+  value: string
+}
+
+export type link = {
+  name: string
+  url: string
+}
+
+export type program_details = {
+  name: string
+  description?: string
+  version?: string
+  links?: link[]
+  contacts?: contact[]
+}
