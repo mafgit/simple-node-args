@@ -126,6 +126,30 @@ describe('max_length for strings', () => {
     expect(program.args.text).toBe('hey')
   })
 })
+describe('regex', () => {
+  const models = [
+    {
+      long: 'email',
+      will_have_value: true,
+      regex:
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+    },
+  ]
+  test('should pass, passing valid value for regex', () => {
+    const process_args = ['', '', '--email', 'valid19@email.com']
+    program.parse_args(models, process_args)
+    expect(program.args.email === process_args[3])
+  })
+  test('should fail, passing invalid value for regex', () => {
+    const process_args = ['', '', '--email', 'valid19@@email..com']
+    expect(() => {
+      program.parse_args(models, process_args)
+    }).toThrowError({
+      message:
+        'Validation Error: The value for --email does not pass the regex test.',
+    })
+  })
+})
 
 // todo: type?: 'integer' | 'float' | 'string' | 'boolean' | 'arr_of_integer' | 'arr_of_float' | 'arr_of_string'
 // todo: required?: boolean

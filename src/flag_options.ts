@@ -15,6 +15,7 @@ export type flag_options = {
   ) => any
   // Validations:
   required?: boolean
+  regex?: RegExp
   enum?: string[]
   min?: number
   max?: number

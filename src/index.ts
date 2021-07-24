@@ -115,7 +115,7 @@ class Program {
 
                   if (type === 'string') {
                     // Checking min_length, max_length
-                    const { min_length, max_length } = flag_options
+                    const { min_length, max_length, regex } = flag_options
                     if (typeof min_length !== 'undefined') {
                       if (value.length < min_length)
                         this.on_error(
@@ -128,6 +128,9 @@ class Program {
                           `Validation Error: Length of the value of ${args_passed[i]}, ${value.length}, is greater than the max_length, ${max_length}.`
                         )
                     }
+                    // x---x Checking min_length, max_length x---x
+
+                    // checking enum
                     const enum_arr: string[] | undefined = flag_options.enum
                     if (typeof enum_arr !== 'undefined') {
                       if (!enum_arr.includes(value))
@@ -135,6 +138,16 @@ class Program {
                           `Validation Error: The value for ${args_passed[i]} does not pass the enum test.`
                         )
                     }
+                    // x---x checking enum x---x
+
+                    // checking regex
+                    if (typeof regex !== 'undefined') {
+                      if (!regex.test(value))
+                        this.on_error(
+                          `Validation Error: The value for ${args_passed[i]} does not pass the regex test.`
+                        )
+                    }
+                    // x---x checking regex x---x
                   } else if (type === 'float' || type === 'integer') {
                     // Checking min, max
                     const { min, max } = flag_options
@@ -151,7 +164,7 @@ class Program {
                         )
                     }
                   }
-                  // --x--
+                  // x---x Checking min, max x---x
 
                   if (on_value) {
                     on_value(value, (err: string | null, new_value: any) => {
