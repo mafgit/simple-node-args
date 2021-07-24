@@ -3,7 +3,7 @@ const { check_required } = require('../dist/check_required')
 const flag_models = [
   { long: 'name', will_have_value: true, required: true },
   { long: 'age', will_have_value: true, type: 'integer', required: true },
-  { long: 'country', default_value: 'Pakistan' },
+  { long: 'country', default: 'Pakistan' },
 ]
 
 describe('check_required', () => {

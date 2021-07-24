@@ -1,5 +1,5 @@
 # Todos
-- [ ] Change error messages
+- [ ] Show flag defaults in default help message
 - [ ] Write remaining tests
 - [ ] Write docs and change readme.md
 

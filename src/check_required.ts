@@ -11,9 +11,7 @@ export const check_required = (
 
   for (let i = 0; i < required_flags.length; i++) {
     if (typeof parsed_args[required_flags[i]] === 'undefined') {
-      return cb(
-        `Validation Error: You did not pass a value for the required flag '${required_flags[i]}'.`
-      )
+      return cb(`Error: Required flag '${required_flags[i]}' is not entered.`)
     }
   }
   return cb(null)

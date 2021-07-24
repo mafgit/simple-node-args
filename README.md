@@ -11,15 +11,22 @@
 
 ## Features
 
-🚀 Simple, lightweight and easy to use
+#### 🧰 Create Flag Models
+  - Multiple validations supported
 
-⚙️ Provides multiple validations such as:
+#### ⚙️ Type Check
+  - String, Integer, Float, Boolean, Arrays
 
-- ✔️ Type Check
+#### 🔤 String Validations
+  - Min/Max Length Check
+  - Enum Check
+  - Regex Check
 
-- 🔢 Min/max checks
+#### 🔢 Number Validations
+  - Min/Max Check
 
-- 🧮 Enums, required check, etc
+#### 🧮 Other Validations
+  - Flag Required Check
 
 ## Links
 

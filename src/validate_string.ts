@@ -11,13 +11,13 @@ export const validate_string = (
   if (typeof min_length !== 'undefined') {
     if (value.length < min_length)
       return cb(
-        `Validation Error: Length of the value of ${flag}, ${value.length}, is smaller than the min_length, ${min_length}.`
+        `Error: Value of '${flag}' must contain at least ${min_length} characters.`
       )
   }
   if (typeof max_length !== 'undefined') {
     if (value.length > max_length)
       cb(
-        `Validation Error: Length of the value of ${flag}, ${value.length}, is greater than the max_length, ${max_length}.`
+        `Error: Value of '${flag}' must not contain more than ${max_length} characters.`
       )
   }
   // x---x Checking min_length, max_length x---x
@@ -25,16 +25,13 @@ export const validate_string = (
   // checking enum
   if (typeof enum_arr !== 'undefined') {
     if (!enum_arr.includes(value))
-      cb(`Validation Error: The value for ${flag} does not pass the enum test.`)
+      cb(`Error: Value passed for '${flag}' is invalid.`)
   }
   // x---x checking enum x---x
 
   // checking regex
   if (typeof regex !== 'undefined') {
-    if (!regex.test(value))
-      cb(
-        `Validation Error: The value for ${flag} does not pass the regex test.`
-      )
+    if (!regex.test(value)) cb(`Error: Value passed for '${flag}' is invalid.`)
   }
   // x---x checking regex x---x
 

@@ -10,8 +10,7 @@ describe('Enum tests', () => {
     expect(() => {
       program.parse(models, process_args)
     }).toThrowError({
-      message:
-        'Validation Error: The value for --ans does not pass the enum test.',
+      message: `Error: Value passed for '--ans' is invalid.`,
     })
   })
 
@@ -36,8 +35,7 @@ describe('min tests for numbers', () => {
     expect(() => {
       program.parse(models, process_args)
     }).toThrowError({
-      message:
-        'Validation Error: Expected the value of --age to be at least 18.',
+      message: `Error: Value of '--age' must be at least 18.`,
     })
   })
 
@@ -60,8 +58,7 @@ describe('max tests for numbers', () => {
     expect(() => {
       program.parse(models, process_args)
     }).toThrowError({
-      message:
-        'Validation Error: Expected the value of --age to not exceed 20.',
+      message: `Error: Value of '--age' must not exceed 20.`,
     })
   })
 
@@ -82,16 +79,14 @@ describe('min_length for strings', () => {
     expect(() => {
       program.parse(models, process_args)
     }).toThrowError({
-      message:
-        'Validation Error: Length of the value of --text, 0, is smaller than the min_length, 5.',
+      message: `Error: Value of '--text' must contain at least 5 characters.`,
     })
 
     process_args[3] = 'text'
     expect(() => {
       program.parse(models, process_args)
     }).toThrowError({
-      message:
-        'Validation Error: Length of the value of --text, 4, is smaller than the min_length, 5.',
+      message: `Error: Value of '--text' must contain at least 5 characters.`,
     })
   })
   test('should pass, passing strings of sizes bigger than and equal to min_length', () => {
@@ -112,8 +107,7 @@ describe('max_length for strings', () => {
     expect(() => {
       program.parse(models, process_args)
     }).toThrowError({
-      message:
-        'Validation Error: Length of the value of --text, 6, is greater than the max_length, 5.',
+      message: `Error: Value of '--text' must not contain more than 5 characters.`,
     })
   })
   test('should pass, passing strings smaller than and equal to max_length', () => {
@@ -145,15 +139,14 @@ describe('regex', () => {
     expect(() => {
       program.parse(models, process_args)
     }).toThrowError({
-      message:
-        'Validation Error: The value for --email does not pass the regex test.',
+      message: `Error: Value passed for '--email' is invalid.`,
     })
   })
 })
 
 // todo: type?: 'integer' | 'float' | 'string' | 'boolean' | 'arr_of_integer' | 'arr_of_float' | 'arr_of_string'
 // todo: required?: boolean
-// todo: default_value?: any
+// todo: default?: any
 
 describe('type parsing', () => {})
 describe('required test', () => {})

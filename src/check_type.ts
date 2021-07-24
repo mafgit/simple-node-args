@@ -8,13 +8,18 @@ export const check_type = (
   if (type === 'boolean') {
     if (value.toLowerCase() === 'true') return cb(null, true)
     else if (value.toLowerCase() === 'false') return cb(null, false)
-    else return cb(`Type Error: Expected ${type}, got '${value}' for ${flag}`)
+    else
+      return cb(
+        `Error: Expected value of type: ${type} for '${flag}', got '${value}'.`
+      )
   }
 
   // number
   else if (type === 'integer' || type === 'float') {
     if (isNaN(parseFloat(value)))
-      return cb(`Type Error: Expected ${type}, got '${value}' for ${flag}`)
+      return cb(
+        `Error: Expected value of type: ${type} for '${flag}', got '${value}'.`
+      )
     else if (type === 'float') return cb(null, parseFloat(value))
     else if (type === 'integer') return cb(null, parseInt(value))
   }

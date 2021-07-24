@@ -140,7 +140,7 @@ class Program {
                   else initial_args[flag_options.long] = value
                 } else
                   this.on_error(
-                    `Validation Error: Value not passed for ${args_passed[i]}`
+                    `Error: Value not passed for '${args_passed[i]}'`
                   )
               } else {
                 const on_flag = flag_options?.on_flag

@@ -4,7 +4,7 @@ export type flag_options = {
   short?: string
   description?: string
   will_have_value?: boolean
-  default_value?: any
+  default?: any
   value_title?: string
   help_flag?: boolean
   // Events:
@@ -14,13 +14,13 @@ export type flag_options = {
     cb: (err: string | null, new_value?: any) => any
   ) => any
   // Validations:
+  regex?: RegExp // string
+  min_length?: number // string
+  max_length?: number // string
+  enum?: string[] // string
+  min?: number // integer / float
+  max?: number // integer / float
   required?: boolean
-  regex?: RegExp
-  enum?: string[]
-  min?: number
-  max?: number
-  min_length?: number
-  max_length?: number
   type?:
     | 'integer'
     | 'float'
