@@ -33,13 +33,25 @@ export const gen_help_message = (
     // ---x--- checking spaces
 
     flag_models?.forEach(
-      ({ short, long, type, description, value_title, will_have_value }) => {
+      ({
+        short,
+        long,
+        type,
+        description,
+        value_title,
+        will_have_value,
+        default: default_value,
+      }) => {
         if (will_have_value && !type) type = 'string'
         let line = `${short ? '-' + short + ', ' : ''}--${long}${
           value_title ? ' <' + value_title + '>' : type ? ' <' + type + '>' : ''
         }`
         let spaces = max_spaces - line.length
-        line += `${description ? ' '.repeat(spaces) + description : ''}\n`
+        line += `${description ? ' '.repeat(spaces) + description : ''}${
+          typeof default_value !== 'undefined'
+            ? ` (default: ${default_value})`
+            : ''
+        }\n`
         msg += line
       }
     )
