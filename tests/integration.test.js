@@ -120,6 +120,7 @@ describe('max_length for strings', () => {
     expect(program.args.text).toBe('hey')
   })
 })
+
 describe('regex', () => {
   const models = [
     {
@@ -144,10 +145,36 @@ describe('regex', () => {
   })
 })
 
+describe('default value test', () => {
+  const models = [
+    {
+      long: 'gender',
+      default: 'male',
+      will_have_value: true,
+    },
+  ]
+  test('should have default value: "male" coz not passing anything', () => {
+    const process_args = ['', '']
+    program.parse(models, process_args)
+    expect(program.args.gender).toBe('male')
+  })
+  test('should have the new value: "female" coz passing explicitly', () => {
+    const process_args = ['', '', '--gender', 'female']
+    program.parse(models, process_args)
+    expect(program.args.gender).toBe('female')
+  })
+})
+
+describe('required flag test', () => {
+  test('should fail, not passing the required flag', () => {
+    const models = [{ long: 'name', required: true, will_have_value: true }]
+    const process_args = ['', '']
+    expect(() => {
+      program.parse(models, process_args)
+    }).toThrowError({ message: `Error: Required flag 'name' is not entered.` })
+  })
+})
+
 // todo: type?: 'integer' | 'float' | 'string' | 'boolean' | 'arr_of_integer' | 'arr_of_float' | 'arr_of_string'
-// todo: required?: boolean
-// todo: default?: any
 
 describe('type parsing', () => {})
-describe('required test', () => {})
-describe('default value test', () => {})

@@ -7,7 +7,6 @@
 - [x] check_type.ts
 - [x] check_required.ts
 - [x] check_if_flag.ts
-- [ ] flag options tests
 - [ ] help message tests
-- [ ] integration & class tests
+- [ ] integration tests (including class & flag_options.)
 
