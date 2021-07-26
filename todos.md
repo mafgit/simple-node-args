@@ -1,4 +1,5 @@
 # Todos
+- [ ] Change program.parse(models, args) to program.parse(args, models)
 - [ ] Write remaining tests
 - [ ] Write docs and change readme.md
 

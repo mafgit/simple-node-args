@@ -175,6 +175,81 @@ describe('required flag test', () => {
   })
 })
 
-// todo: type?: 'integer' | 'float' | 'string' | 'boolean' | 'arr_of_integer' | 'arr_of_float' | 'arr_of_string'
+describe('type parsing', () => {
+  describe('integer', () => {
+    const models = [{ long: 'age', will_have_value: true, type: 'integer' }]
+    test('should parse to 18', () => {
+      const args = ['', '', '--age', '18.9']
+      program.parse(models, args)
+      expect(program.args.age).toBe(18)
+    })
+    test('should fail, passing value of invalid type', () => {
+      const args = ['', '', '--age', 'x18.9']
+      expect(() => {
+        program.parse(models, args)
+      }).toThrowError({
+        message: `Error: Expected value of type: integer for '--age', got 'x18.9'.`,
+      })
+    })
+  })
 
-describe('type parsing', () => {})
+  describe('float', () => {
+    const models = [{ long: 'age', will_have_value: true, type: 'float' }]
+    test('should parse to 18.9', () => {
+      const args = ['', '', '--age', '18.9']
+      program.parse(models, args)
+      expect(program.args.age).toBe(18.9)
+    })
+    test('should fail, passing value of invalid type', () => {
+      const args = ['', '', '--age', 'x18.9']
+      expect(() => {
+        program.parse(models, args)
+      }).toThrowError({
+        message: `Error: Expected value of type: float for '--age', got 'x18.9'.`,
+      })
+    })
+  })
+
+  describe('boolean', () => {
+    const models = [{ long: 'git', will_have_value: true, type: 'boolean' }]
+    test('should parse to true', () => {
+      const args = ['', '', '--git', 'true']
+      program.parse(models, args)
+      expect(program.args.git).toBe(true)
+    })
+    test('should parse to false', () => {
+      const args = ['', '', '--git', 'false']
+      program.parse(models, args)
+      expect(program.args.git).toBe(false)
+    })
+    test('should fail, passing invalid value for boolean', () => {
+      const args = ['', '', '--git', 'truefalse']
+      expect(() => {
+        program.parse(models, args)
+      }).toThrowError({
+        message: `Error: Expected value of type: boolean for '--git', got 'truefalse'.`,
+      })
+    })
+  })
+
+  describe('string', () => {
+    const models = [{ long: 'name', will_have_value: true, type: 'string' }]
+    test('should parse to "8"', () => {
+      const args = ['', '', '--name', '8']
+      program.parse(models, args)
+      expect(program.args.name).toBe('8')
+    })
+    test('should parse to "8" even without mentioning type: "string"', () => {
+      const args = ['', '', '--name', '8']
+      models.type = undefined
+      program.parse(models, args)
+      expect(program.args.name).toBe('8')
+    })
+  })
+
+  test.todo('array of integer test')
+  test.todo('array of float test')
+  test.todo('array of string test')
+})
+
+test.todo('check: without will_have_value, does --git parse to true')
