@@ -1,7 +1,8 @@
 # Todos
 - [ ] Write remaining tests
-- [ ] Write docs, add help_message docs
+- [ ] Review Docs & make coverpage
 - [ ] Check readme.md
+- [ ] Build & Version & Publish
 
 # Tests
 - [x] initialize_args.ts

@@ -1,7 +1,8 @@
-# Handling Errors
+# Error Handling
 
 - When any error occurs, `program.on_error` function is called and an error is passed to it.
 - The default function is:
+
 ```js
 program.on_error = (err: string) => {
   throw new Error(err)
@@ -9,6 +10,7 @@ program.on_error = (err: string) => {
 ```
 
 - You can change the behavior of the function like:
+
 ```js
 // write this before program.parse
 program.on_error = (err) => {
@@ -17,4 +19,4 @@ program.on_error = (err) => {
 program.parse(...)
 ```
 
-**Next**: *[Help message](help_message.md)*
+**Next**: *[Help Message](src/help_message.md)*

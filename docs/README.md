@@ -28,7 +28,7 @@
 
 ## Links
 
-[📘 Docs](https://mafgit.github.io/simple-node-args/)
+[🚀 Get Started](src/get_started.md)
 
 [🖤 Github](https://github.com/mafgit/simple-node-args)
 

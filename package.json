@@ -10,7 +10,7 @@
     "pretest": "npm run build",
     "test": "jest",
     "start": "node ./",
-    "docs": "docsify serve docs"
+    "docs": "docsify serve docs -p 35729"
   },
   "keywords": [
     "cli",
