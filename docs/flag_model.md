@@ -20,7 +20,7 @@ const flag_models = [
 
 ```js
   // example:
-  { long: 'name' } // or --name
+  { long: 'name' } // must be without dashes
 ```
 
 ### short
@@ -29,7 +29,7 @@ const flag_models = [
 
 ```js
   // example:
-  { ..., short: 'n' } // or -n
+  { ..., short: 'n' } // must be without dashes
 ```
 
 ### description

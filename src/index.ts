@@ -61,51 +61,56 @@ class Program {
                 console.log(this.help_message)
               }
 
-              if (flag_options?.will_have_value) {
+              // default for will_have_value is true
+              if (typeof flag_options!.will_have_value === 'undefined')
+                flag_options!.will_have_value = true
+              // default for type is 'string'
+              if (typeof flag_options!.type === 'undefined')
+                flag_options!.type = 'string'
+
+              if (flag_options!.will_have_value === true) {
                 if (typeof args_passed[i + 1] !== 'undefined') {
                   // for loop for args values array
                   let value: any = args_passed[i + 1]
                   let is_arr: boolean = false
                   let arr_value: any[] = []
-                  const { on_value } = flag_options
-                  let { type } = flag_options
+                  const { on_value } = flag_options!
+                  let { type } = flag_options!
 
                   // checking types
-                  if (type) {
-                    if (!type.startsWith('arr_of_'))
-                      check_type(
-                        type as 'string' | 'integer' | 'float' | 'boolean',
-                        value,
-                        args_passed[i],
-                        (err, parsed_value) => {
-                          if (err) this.on_error(err)
-                          value = parsed_value
-                        }
-                      )
-                    else {
-                      // values are of an array
-                      for (let j = i + 1; j < args_passed.length; j++) {
-                        if (args_passed[j].startsWith('-')) break
-                        else {
-                          is_arr = true
-                          let val_type = type.replace('arr_of_', '')
-                          check_type(
-                            val_type as
-                              | 'string'
-                              | 'integer'
-                              | 'float'
-                              | 'boolean',
-                            args_passed[j],
-                            args_passed[i],
-                            (err, parsed_value) => {
-                              if (err) throw err
-                              arr_value.push(parsed_value)
-                            }
-                          )
-                        }
+                  if (!type!.startsWith('arr_of_'))
+                    check_type(
+                      type as 'string' | 'integer' | 'float' | 'boolean',
+                      value,
+                      args_passed[i],
+                      (err, parsed_value) => {
+                        if (err) this.on_error(err)
+                        value = parsed_value
+                      }
+                    )
+                  else {
+                    // values are of an array
+                    for (let j = i + 1; j < args_passed.length; j++) {
+                      if (args_passed[j].startsWith('-')) break
+                      else {
+                        is_arr = true
+                        let val_type = type!.replace('arr_of_', '')
+                        check_type(
+                          val_type as
+                            | 'string'
+                            | 'integer'
+                            | 'float'
+                            | 'boolean',
+                          args_passed[j],
+                          args_passed[i],
+                          (err, parsed_value) => {
+                            if (err) throw err
+                            arr_value.push(parsed_value)
+                          }
+                        )
                       }
                     }
-                  } else type = 'string'
+                  }
                   // --x--
 
                   // VALIDATIONS
@@ -113,7 +118,7 @@ class Program {
                     validate_string(
                       args_passed[i],
                       value,
-                      flag_options,
+                      flag_options!,
                       (err) => {
                         if (err) this.on_error(err)
                       }
@@ -122,7 +127,7 @@ class Program {
                     validate_number(
                       args_passed[i],
                       value,
-                      flag_options,
+                      flag_options!,
                       (err) => {
                         if (err) this.on_error(err)
                       }
@@ -136,8 +141,8 @@ class Program {
                     })
                   }
 
-                  if (is_arr) initial_args[flag_options.long] = arr_value
-                  else initial_args[flag_options.long] = value
+                  if (is_arr) initial_args[flag_options!.long] = arr_value
+                  else initial_args[flag_options!.long] = value
                 } else
                   this.on_error(
                     `Error: Value not passed for '${args_passed[i]}'`
@@ -145,12 +150,10 @@ class Program {
               } else {
                 const on_flag = flag_options?.on_flag
                 if (on_flag) on_flag()
-                initial_args[(flag_options as flag_options).long] = true
+                initial_args[flag_options!.long] = true
               }
             }
-            // else {
-            //   console.log(`${args_passed[i]} is a value`)
-            // }
+            // else console.log(`${args_passed[i]} is a value`)
           }
         }
       )
