@@ -14,13 +14,6 @@ export type flag_options = {
     cb: (err: string | null, new_value?: any) => any
   ) => any
   // Validations:
-  regex?: RegExp // string
-  min_length?: number // string
-  max_length?: number // string
-  enum?: string[] // string
-  min?: number // integer / float
-  max?: number // integer / float
-  required?: boolean
   type?:
     | 'integer'
     | 'float'
@@ -29,6 +22,13 @@ export type flag_options = {
     | 'arr_of_integer'
     | 'arr_of_float'
     | 'arr_of_string'
+  regex?: RegExp // string
+  min_length?: number // string
+  max_length?: number // string
+  enum?: string[] // string
+  min?: number // integer / float
+  max?: number // integer / float
+  required?: boolean
 }
 
 export type contact = {
