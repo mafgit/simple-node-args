@@ -1,5 +1,3 @@
-<!-- TODO: Change README -->
-
 <img src="https://res.cloudinary.com/dej0qc8lq/image/upload/v1626001270/logos/Rectangle_w2j31a.png" style="border-radius: 10px" alt="Logo Rectangle"/>
 
 # Simple Node Args
