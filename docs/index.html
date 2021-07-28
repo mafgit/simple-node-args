@@ -10,15 +10,16 @@
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
     />
     <link rel="icon" type="image/png" href="images/favicon.png" />
-    <!-- Theme: Simple Dark -->
-    <!-- <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css"
-    /> -->
     <link
       rel="stylesheet"
       href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css"
     />
+    <style>
+      .cover-main,
+      .cover-main h1 span {
+        color: #e0e0e0;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
@@ -29,6 +30,8 @@
         name: 'Simple Node Args',
         repo: 'https://github.com/mafgit/simple-node-args',
         loadSidebar: true,
+        coverpage: true,
+        onlyCover: true,
         subMaxLevel: 2,
         search: {
           noData: 'No results',
