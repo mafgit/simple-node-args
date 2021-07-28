@@ -11,4 +11,4 @@ const flag_models = [
 { long: 'age', short: 'a', type: 'integer', min: 18 }
 ```
 
-**Next**: *[Flag Details](src/flag_details.md)*
+**Next**: *[Flag Details](flag_details.md)*

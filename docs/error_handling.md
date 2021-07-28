@@ -19,4 +19,4 @@ program.on_error = (err) => {
 program.parse(...)
 ```
 
-**Next**: *[Help Message](src/help_message.md)*
+**Next**: *[Help Message](help_message.md)*

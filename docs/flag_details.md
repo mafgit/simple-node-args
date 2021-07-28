@@ -38,4 +38,4 @@
 - `default?: any`
 - It is used to specify the default value for a flag if the flag is not passed.
 
-**Next**: *[Flag Validations](src/flag_validations.md)*
+**Next**: *[Flag Validations](flag_validations.md)*

@@ -6,6 +6,6 @@
 
 [Github](https://github.com/mafgit/simple-node-args)
 [NPM](https://npmjs.com/mafgit/simple-node-args)
-[Get Started](src/get_started.md)
+[Get Started](get_started.md)
 
 ![color](#1c1c1c)

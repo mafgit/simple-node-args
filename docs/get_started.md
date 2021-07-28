@@ -44,6 +44,6 @@ const program = new Program({
 })
 ```
 
-- Check [Help Message](./help_message.md) for more info on help message.
+- Check [Help Message](help_message.md) for more info on help message.
 
-**Next**: *[Defining Flag Models](src/flag_models.md)*
+**Next**: *[Defining Flag Models](flag_models.md)*
