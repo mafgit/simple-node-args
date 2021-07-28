@@ -3,9 +3,7 @@ const program = new Program({ name: 'test' })
 
 describe('Enum tests', () => {
   test('should pass, passing invalid values for enum', () => {
-    const models = [
-      { long: 'ans', will_have_value: true, enum: ['yes', 'no', 'y', 'n'] },
-    ]
+    const models = [{ long: 'ans', enum: ['yes', 'no', 'y', 'n'] }]
     const process_args = ['', '', '--ans', 'YES']
     expect(() => {
       program.parse(models, process_args)
@@ -15,9 +13,7 @@ describe('Enum tests', () => {
   })
 
   test('should pass, passing valid value for enum', () => {
-    const models = [
-      { long: 'ans', will_have_value: true, enum: ['yes', 'no', 'y', 'n'] },
-    ]
+    const models = [{ long: 'ans', enum: ['yes', 'no', 'y', 'n'] }]
     const process_args = ['', '', '--ans', 'no']
     expect(() => {
       program.parse(models, process_args)
@@ -27,9 +23,7 @@ describe('Enum tests', () => {
 })
 
 describe('min tests for numbers', () => {
-  const models = [
-    { long: 'age', type: 'integer', min: 18, will_have_value: true },
-  ]
+  const models = [{ long: 'age', type: 'integer', min: 18 }]
   test('should fail, passing value lower than min', () => {
     const process_args = ['', '', '--age', '17']
     expect(() => {
@@ -50,9 +44,7 @@ describe('min tests for numbers', () => {
 })
 
 describe('max tests for numbers', () => {
-  const models = [
-    { long: 'age', type: 'integer', max: 20, will_have_value: true },
-  ]
+  const models = [{ long: 'age', type: 'integer', max: 20 }]
   test('should fail, passing value higher than max', () => {
     const process_args = ['', '', '--age', '21']
     expect(() => {
@@ -73,7 +65,7 @@ describe('max tests for numbers', () => {
 })
 
 describe('min_length for strings', () => {
-  const models = [{ long: 'text', will_have_value: true, min_length: 5 }]
+  const models = [{ long: 'text', min_length: 5 }]
   test('should fail, passing empty string & another smaller than min_length', () => {
     const process_args = ['', '', '--text', '']
     expect(() => {
@@ -101,7 +93,7 @@ describe('min_length for strings', () => {
 })
 
 describe('max_length for strings', () => {
-  const models = [{ long: 'text', will_have_value: true, max_length: 5 }]
+  const models = [{ long: 'text', max_length: 5 }]
   test('should fail, passing string bigger than max_length', () => {
     const process_args = ['', '', '--text', 'hello!']
     expect(() => {
@@ -125,7 +117,7 @@ describe('regex', () => {
   const models = [
     {
       long: 'email',
-      will_have_value: true,
+
       regex:
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
     },
@@ -150,7 +142,6 @@ describe('default value test', () => {
     {
       long: 'gender',
       default: 'male',
-      will_have_value: true,
     },
   ]
   test('should have default value: "male" coz not passing anything', () => {
@@ -167,7 +158,7 @@ describe('default value test', () => {
 
 describe('required flag test', () => {
   test('should fail, not passing the required flag', () => {
-    const models = [{ long: 'name', required: true, will_have_value: true }]
+    const models = [{ long: 'name', required: true }]
     const process_args = ['', '']
     expect(() => {
       program.parse(models, process_args)
@@ -177,7 +168,7 @@ describe('required flag test', () => {
 
 describe('type parsing', () => {
   describe('integer', () => {
-    const models = [{ long: 'age', will_have_value: true, type: 'integer' }]
+    const models = [{ long: 'age', type: 'integer' }]
     test('should parse to 18', () => {
       const args = ['', '', '--age', '18.9']
       program.parse(models, args)
@@ -194,7 +185,7 @@ describe('type parsing', () => {
   })
 
   describe('float', () => {
-    const models = [{ long: 'age', will_have_value: true, type: 'float' }]
+    const models = [{ long: 'age', type: 'float' }]
     test('should parse to 18.9', () => {
       const args = ['', '', '--age', '18.9']
       program.parse(models, args)
@@ -211,7 +202,7 @@ describe('type parsing', () => {
   })
 
   describe('boolean', () => {
-    const models = [{ long: 'git', will_have_value: true, type: 'boolean' }]
+    const models = [{ long: 'git', type: 'boolean' }]
     test('should parse to true', () => {
       const args = ['', '', '--git', 'true']
       program.parse(models, args)
@@ -233,7 +224,7 @@ describe('type parsing', () => {
   })
 
   describe('string', () => {
-    const models = [{ long: 'name', will_have_value: true, type: 'string' }]
+    const models = [{ long: 'name', type: 'string' }]
     test('should parse to "8"', () => {
       const args = ['', '', '--name', '8']
       program.parse(models, args)
@@ -247,9 +238,52 @@ describe('type parsing', () => {
     })
   })
 
-  test.todo('array of integer test')
-  test.todo('array of float test')
-  test.todo('array of string test')
+  describe('array of integer', () => {
+    const models = [{ long: 'nums', type: 'arr_of_integer' }]
+    test('should parse floats to integers', () => {
+      const args = ['', '', '--nums', '0.7', '+3', '4.3']
+      program.parse(models, args)
+      expect(program.args.nums).toEqual([0, 3, 4])
+    })
+
+    test('should fail, passing an invalid value among integers', () => {
+      const args = ['', '', '--nums', '2', '3', '3a']
+      expect(() => {
+        program.parse(models, args)
+      }).toThrowError({
+        message: `Error: Expected value of type: integer for '--nums', got '3a'.`,
+      })
+    })
+  })
+
+  describe('array of float', () => {
+    const models = [{ long: 'nums', type: 'arr_of_float' }]
+    test('should pass, passing valid floats', () => {
+      const args = ['', '', '--nums', '0.7', '+3', '4.3']
+      program.parse(models, args)
+      expect(program.args.nums).toEqual([0.7, 3, 4.3])
+    })
+
+    test('should fail, passing an invalid value among floats', () => {
+      const args = ['', '', '--nums', '2.2', '3.3', '3a']
+      expect(() => {
+        program.parse(models, args)
+      }).toThrowError({
+        message: `Error: Expected value of type: float for '--nums', got '3a'.`,
+      })
+    })
+  })
+  describe('array of string', () => {
+    const models = [{ long: 'names', type: 'arr_of_string' }]
+    test('should pass, passing strings', () => {
+      const args = ['', '', '--names', '123', '321', 'asd', '', '...']
+      program.parse(models, args)
+      expect(program.args.names).toEqual(['123', '321', 'asd', '', '...'])
+    })
+  })
 })
 
-test.todo('check: without will_have_value, does --git parse to true')
+test.todo('check: with will_have_value: false, does --git parse to true')
+test.todo(
+  'check: will_have_value: true, not passing values after flag errs or not'
+)

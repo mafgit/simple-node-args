@@ -1,3 +1,7 @@
+const is_num = (val: string): boolean => {
+  return /^([-+]?\d+)(\.\d+)?$/.test(val)
+}
+
 export const check_type = (
   type: 'string' | 'integer' | 'float' | 'boolean',
   value: string,
@@ -16,7 +20,8 @@ export const check_type = (
 
   // number
   else if (type === 'integer' || type === 'float') {
-    if (isNaN(parseFloat(value)))
+    // checking if arg passed is actually a number
+    if (!is_num(value))
       return cb(
         `Error: Expected value of type: ${type} for '${flag}', got '${value}'.`
       )

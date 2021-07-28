@@ -1,4 +1,5 @@
 # Todos
+- [ ] -4 value gives error of invalid flag
 - [ ] Write remaining tests
 - [ ] Review Docs & make coverpage
 - [ ] Check readme.md
