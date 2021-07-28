@@ -31,6 +31,11 @@ class Program {
     }
   }
 
+  /**
+   * Parses the arguments and puts them in program.args
+   * @param flag_models The array containing flag models
+   * @param args_passed process.argv contains the the arguments passed into your node.js app, pass it here.
+   */
   parse(flag_models: flag_options[], args_passed: string[]) {
     args_passed = args_passed.slice(2)
     const initial_args = initialize_args(flag_models)
