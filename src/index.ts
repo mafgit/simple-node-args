@@ -62,7 +62,11 @@ class Program {
               }
 
               // default for will_have_value is true
-              if (typeof flag_options!.will_have_value === 'undefined')
+              if (
+                typeof flag_options!.will_have_value === 'undefined' &&
+                !flag_options!.help_flag
+              )
+                // if help flag, then don't flip set to true
                 flag_options!.will_have_value = true
               // default for type is 'string'
               if (typeof flag_options!.type === 'undefined')

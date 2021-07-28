@@ -39,7 +39,7 @@ const program = new Program({
     { name: 'hotmail', value: 'myemail@hotmail.com' }
   ],
   links: [
-    { name: 'github', url: 'https://github.com/me/my-node-cli' },
+    { name: 'github', value: 'https://github.com/me/my-node-cli' },
   ]
 })
 ```

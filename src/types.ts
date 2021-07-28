@@ -38,7 +38,7 @@ export type contact = {
 
 export type link = {
   name: string
-  url: string
+  value: string
 }
 
 export type program_details = {

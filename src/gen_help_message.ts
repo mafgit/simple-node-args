@@ -67,9 +67,9 @@ export const gen_help_message = (
     })
     // ---x--- checking spaces
 
-    links?.forEach(({ name, url }) => {
+    links?.forEach(({ name, value }) => {
       let spaces = max_spaces - name.length
-      let line = name + ' '.repeat(spaces) + url + '\n'
+      let line = name + ' '.repeat(spaces) + value + '\n'
       msg += line
     })
   }
