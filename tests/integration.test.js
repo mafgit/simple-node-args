@@ -283,7 +283,32 @@ describe('type parsing', () => {
   })
 })
 
-test.todo('check: with will_have_value: false, does --git parse to true')
-test.todo(
-  'check: will_have_value: true, not passing values after flag errs or not'
-)
+describe('flag with will_have_value set to false', () => {
+  const models = [{ long: 'git', will_have_value: false }]
+  test('should parse to true when mentioning the flag', () => {
+    const args = ['', '', '--git', 'random value']
+    program.parse(models, args)
+    expect(program.args.git).toBe(true)
+  })
+
+  test('should parse to undefined when not mentioning the flag', () => {
+    const args = ['', '']
+    program.parse(models, args)
+    expect(program.args.git).toBeUndefined()
+  })
+})
+
+describe('will_have_value: true, does not passing values after flag errs or not?', () => {
+  const models = [
+    {
+      long: 'name',
+      will_have_value: true, //default
+    },
+  ]
+  test('should err, not passing value', () => {
+    const args = ['', '', '--name']
+    expect(() => {
+      program.parse(models, args)
+    }).toThrowError({ message: `Error: Value not passed for '--name'` })
+  })
+})
