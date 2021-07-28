@@ -239,15 +239,19 @@ describe('type parsing', () => {
   })
 
   describe('array of integer', () => {
-    const models = [{ long: 'nums', type: 'arr_of_integer' }]
+    const models = [
+      { long: 'nums', type: 'integer[]' },
+      { long: 'age', type: 'integer' },
+    ]
     test('should parse floats to integers', () => {
-      const args = ['', '', '--nums', '0.7', '+3', '4.3']
+      const args = ['', '', '--nums', '0.7', '+3', '-4.3', '--age', '18']
       program.parse(models, args)
-      expect(program.args.nums).toEqual([0, 3, 4])
+      expect(program.args.nums).toEqual([0, 3, -4])
+      expect(program.args.age).toEqual(18)
     })
 
     test('should fail, passing an invalid value among integers', () => {
-      const args = ['', '', '--nums', '2', '3', '3a']
+      const args = ['', '', '--nums', '2', '3', '3a', '--age', '18']
       expect(() => {
         program.parse(models, args)
       }).toThrowError({
@@ -257,15 +261,19 @@ describe('type parsing', () => {
   })
 
   describe('array of float', () => {
-    const models = [{ long: 'nums', type: 'arr_of_float' }]
+    const models = [
+      { long: 'nums', type: 'float[]' },
+      { long: 'age', type: 'integer' },
+    ]
     test('should pass, passing valid floats', () => {
-      const args = ['', '', '--nums', '0.7', '+3', '4.3']
+      const args = ['', '', '--nums', '0.7', '+3', '-4.3', '--age', '18']
       program.parse(models, args)
-      expect(program.args.nums).toEqual([0.7, 3, 4.3])
+      expect(program.args.nums).toEqual([0.7, 3, -4.3])
+      expect(program.args.age).toEqual(18)
     })
 
     test('should fail, passing an invalid value among floats', () => {
-      const args = ['', '', '--nums', '2.2', '3.3', '3a']
+      const args = ['', '', '--nums', '2.2', '3.3', '3a', '--age', '18']
       expect(() => {
         program.parse(models, args)
       }).toThrowError({
@@ -274,7 +282,7 @@ describe('type parsing', () => {
     })
   })
   describe('array of string', () => {
-    const models = [{ long: 'names', type: 'arr_of_string' }]
+    const models = [{ long: 'names', type: 'string[]' }]
     test('should pass, passing strings', () => {
       const args = ['', '', '--names', '123', '321', 'asd', '', '...']
       program.parse(models, args)

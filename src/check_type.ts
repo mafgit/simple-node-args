@@ -1,4 +1,4 @@
-const is_num = (val: string): boolean => {
+export const is_num = (val: string): boolean => {
   return /^([-+]?\d+)(\.\d+)?$/.test(val)
 }
 

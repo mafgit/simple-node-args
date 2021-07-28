@@ -19,9 +19,9 @@ export type flag_options = {
     | 'float'
     | 'string'
     | 'boolean'
-    | 'arr_of_integer'
-    | 'arr_of_float'
-    | 'arr_of_string'
+    | 'integer[]'
+    | 'float[]'
+    | 'string[]'
   regex?: RegExp // string
   min_length?: number // string
   max_length?: number // string

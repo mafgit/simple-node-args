@@ -1,3 +1,4 @@
+import { is_num } from './check_type'
 import { flag_options } from './types'
 
 export const check_if_flag = (
@@ -12,7 +13,7 @@ export const check_if_flag = (
   let flag_options: undefined | flag_options
   let is_flag: boolean = false
   // checking if it is a flag or a value
-  if (arg.startsWith('-')) {
+  if (arg.startsWith('-') && !is_num(arg)) {
     // arg must be a flag
     if (arg.startsWith('--')) {
       // the arg must be long

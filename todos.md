@@ -1,5 +1,4 @@
 # Todos
-- [ ] -4 value gives error of invalid flag
 - [ ] Review Docs
 - [ ] Check readme.md
 - [ ] Build & Version & Publish

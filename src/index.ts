@@ -2,7 +2,7 @@ import { contact, flag_options, link, program_details } from './types'
 import { check_if_flag } from './check_if_flag'
 import { check_required } from './check_required'
 import { initialize_args } from './initialize_args'
-import { check_type } from './check_type'
+import { check_type, is_num } from './check_type'
 import { validate_string } from './validate_string'
 import { validate_number } from './validate_number'
 import { gen_help_message } from './gen_help_message'
@@ -78,7 +78,7 @@ class Program {
                   let { type } = flag_options!
 
                   // checking types
-                  if (!type!.startsWith('arr_of_'))
+                  if (!type!.endsWith('[]'))
                     check_type(
                       type as 'string' | 'integer' | 'float' | 'boolean',
                       value,
@@ -91,10 +91,14 @@ class Program {
                   else {
                     // values are of an array
                     for (let j = i + 1; j < args_passed.length; j++) {
-                      if (args_passed[j].startsWith('-')) break
+                      if (
+                        args_passed[j].startsWith('-') &&
+                        !is_num(args_passed[j])
+                      )
+                        break
                       else {
                         is_arr = true
-                        let val_type = type!.replace('arr_of_', '')
+                        let val_type = type!.replace('[]', '')
                         check_type(
                           val_type as
                             | 'string'

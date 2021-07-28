@@ -6,6 +6,7 @@
 
 - `long: string`
 - It defines the long flag identifier such as `--name`.
+- It must not be a number like `'123'`
 - It is the only required field.
 
 ```js
@@ -17,6 +18,7 @@
 
 - `short?: string`
 - It defines the short flag identifier such as `-n`.
+- It must not be a number like `'123'`
 
 ```js
   // example:

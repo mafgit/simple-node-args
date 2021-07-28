@@ -4,14 +4,14 @@
 
 ## Type Checking
 
-- `type?: 'integer' | 'float' | 'string' | 'boolean' | 'arr_of_integer' | 'arr_of_float' | 'arr_of_string'`
+- `type?: 'integer' | 'float' | 'string' | 'boolean' | 'integer[]' | 'float[]' | 'string[]'`
 - It accepts the value mentioned above.
 - It is set to string by default.
 
 ### Arrays
 
-- You can set type to `'arr_of_integer'`, `'arr_of_float'` or `'arr_of_string'`
-- The arguments passed after the flag (until an argument that starts with `-` is encountered) will be set as the value for the flag in an array.
+- You can set type to `'integer[]'`, `'float[]'` or `'string[]'`
+- The arguments passed after the flag (until an argument that starts with `-`, and is not a number, is encountered) will be set as the value for the flag in an array.
 
 ## Regex Pattern
 
