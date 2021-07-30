@@ -1,4 +1,4 @@
-export type flag_options = {
+export type flag_schema = {
   // Details:
   long: string
   short?: string

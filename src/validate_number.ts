@@ -1,13 +1,13 @@
-import { flag_options } from './types'
+import { flag_schema } from './types'
 
 export const validate_number = (
   flag: string,
   value: number,
-  flag_options: flag_options,
+  flag_schema: flag_schema,
   cb: (err?: string) => any
 ) => {
   // Checking min, max
-  const { min, max } = flag_options
+  const { min, max } = flag_schema
   if (typeof max !== 'undefined') {
     if (value > max)
       return cb(`Error: Value of '${flag}' must not exceed ${max}.`)

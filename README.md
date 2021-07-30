@@ -9,7 +9,7 @@
 
 ## Features
 
-#### 🧰 Create Flag Models
+#### 🧰 Flag Schemas
   - Multiple validations supported
 
 #### ⚙️ Type Check

@@ -1,8 +1,9 @@
-# Simple Node Args
+<!-- TODO: update version -->
+# Simple Node Args <small>v1.1.0</small>
 
 - <big>🔥 Easy to use</big>
-- <big>🧰 Create flag models</big>
-- <big>⚙️ Flag validations</big>
+- <big>🧰 Schema or schema-less approach</big>
+- <big>⚙️ Validate Flags</big>
 
 [Github](https://github.com/mafgit/simple-node-args)
 [NPM](https://www.npmjs.com/package/simple-node-args)

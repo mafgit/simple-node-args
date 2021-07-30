@@ -1,8 +1,8 @@
-import { flag_options, program_details } from './types'
+import { flag_schema, program_details } from './types'
 
 export const gen_help_message = (
   program_details: program_details,
-  flag_models: flag_options[]
+  flag_schemas: flag_schema[]
 ) => {
   const {
     name: program_name,
@@ -17,11 +17,11 @@ export const gen_help_message = (
   }\nUsage: ${program_name} [options]\n`
 
   // options
-  if (flag_models.length > 0) {
+  if (flag_schemas.length > 0) {
     msg += `\nOptions:\n\n`
-    // checking spaces in flag_models
+    // checking spaces in flag_schemas
     let max_spaces = 0
-    flag_models?.forEach(
+    flag_schemas?.forEach(
       ({ short, long, type, value_title, will_have_value }) => {
         if (will_have_value && !type) type = 'string'
         let spaces = `${short ? '-' + short + ', ' : ''}--${long}${
@@ -32,7 +32,7 @@ export const gen_help_message = (
     )
     // ---x--- checking spaces
 
-    flag_models?.forEach(
+    flag_schemas?.forEach(
       ({
         short,
         long,

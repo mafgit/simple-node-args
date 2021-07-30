@@ -1,13 +1,13 @@
-import { flag_options } from './types'
+import { flag_schema } from './types'
 
 export const validate_string = (
   flag: string,
   value: string,
-  flag_options: flag_options,
+  flag_schema: flag_schema,
   cb: (err?: string) => any
 ): any => {
   // Checking min_length, max_length
-  const { min_length, max_length, regex, enum: enum_arr } = flag_options
+  const { min_length, max_length, regex, enum: enum_arr } = flag_schema
   if (typeof min_length !== 'undefined') {
     if (value.length < min_length)
       return cb(

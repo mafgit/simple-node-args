@@ -1,6 +1,6 @@
 const { check_required } = require('../dist/check_required')
 
-const flag_models = [
+const flag_schemas = [
   { long: 'name', will_have_value: true, required: true },
   { long: 'age', will_have_value: true, type: 'integer', required: true },
   { long: 'country', default: 'Pakistan' },
@@ -12,7 +12,7 @@ describe('check_required', () => {
       country: 'Pakistan',
       age: undefined,
     }
-    check_required(flag_models, parsed_args, (err) => {
+    check_required(flag_schemas, parsed_args, (err) => {
       expect(err).toBeTruthy()
     })
   })
@@ -22,7 +22,7 @@ describe('check_required', () => {
       country: 'Pakistan',
       age: undefined,
     }
-    check_required(flag_models, parsed_args, (err) => {
+    check_required(flag_schemas, parsed_args, (err) => {
       expect(err).toBeTruthy()
     })
   })
@@ -33,7 +33,7 @@ describe('check_required', () => {
       name: 'Abcd',
       age: 18,
     }
-    check_required(flag_models, parsed_args, (err) => {
+    check_required(flag_schemas, parsed_args, (err) => {
       expect(err).toBeNull()
     })
   })

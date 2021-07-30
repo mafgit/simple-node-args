@@ -17,11 +17,8 @@ const program = new Program({
   // more fields can be passed (discussed later)
 })
 
-// The following will be discussed later In Sha Allah:
-const flag_models = [{...}, {...}, {...}]
-// we will learn how to create models, specify validations, etc, later In Sha ALlah.
-
-program.parse(flag_models, process.argv)
+// this is a schema-less approach:
+program.parse(process.argv) // passing 2nd parameter (schemas) will be discussed later In sha Allah.
 // program.args contains your args now :)
 ```
 
@@ -46,4 +43,4 @@ const program = new Program({
 
 - Check [Help Message](help_message.md) for more info on help message.
 
-**Next**: *[Defining Flag Models](flag_models.md)*
+**Next**: *[Flag Schemas](flag_schemas.md)*
