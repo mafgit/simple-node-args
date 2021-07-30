@@ -1,6 +1,6 @@
 {
   "name": "simple-node-args",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "An NPM package to help you parse arguments passed into your Node.js app.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
