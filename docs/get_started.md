@@ -19,7 +19,7 @@ const program = new Program({
 
 // this is a schema-less approach:
 program.parse(process.argv) // passing 2nd parameter (schemas) will be discussed later In sha Allah.
-// program.args contains your args now :)
+// program.args contains your args now
 ```
 
 ## Program Details
